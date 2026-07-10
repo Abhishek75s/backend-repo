@@ -1,0 +1,14 @@
+1. create a folder and then do => 'git init' or 'git init -y' means yes for all qns 
+    git init will add package.json
+
+2. add .gitignore file and .env file README.md file and basic src/config/constants.js and other folder structure 
+
+3. now install 'npm i express' and 'npm i nodemon' 
+
+4. make a server in app.js or server.js
+
+5. establish mongodb connection
+
+6. make a simple get request
+
+
