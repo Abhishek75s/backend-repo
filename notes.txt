@@ -2,7 +2,8 @@
     git init will add package.json
 
 2. add .gitignore file and .env file README.md file and basic src/config/constants.js and other folder structure 
-
+    for app.js and db connection.
+    
 3. now install 'npm i express' and 'npm i nodemon' 
 
 4. make a server in app.js or server.js

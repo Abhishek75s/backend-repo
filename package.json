@@ -1,17 +1,20 @@
 {
-  "name": "backend-repo",
+  "name": "backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "a tutorials hands on for intro-to-backend",
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "mongoose": "^9.7.4",
     "nodemon": "^3.1.14"
   }
 }
