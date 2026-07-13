@@ -1,14 +1,14 @@
 import express from 'express'
+import userRouter from './routes/user.route.js'
 
-const app = express()
-const PORT = process.env.PORT || 3000;
+const app = express() // create an express app
 
-app.get('/', (req, res) => {
-    return res.json("good")
-})
+app.use(express.json());
 
-app.listen(PORT, () => {
-    console.log(`app running at PORT: ${PORT}`)
-})
+// routes declarations
+app.use('/api/v1/users', userRouter);
+// app.use('/api/v1/posts', postRouter);
+
+// example route: http://localhost:3000/api/v1/users/register
 
 export default app;

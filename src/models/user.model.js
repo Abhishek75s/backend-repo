@@ -1,4 +1,5 @@
 import { Schema, model } from 'mongoose';
+import bcrypt from 'bcrypt';
 
 // 1. Schema defined with lowerCamelCase
 const userSchema = new Schema({
@@ -17,5 +18,6 @@ const userSchema = new Schema({
 });
 
 // 2. Model class defined with Upper PascalCase and exported
-const User = model('User', userSchema);
-export default User;
+export const User = model('User', userSchema);
+
+// export User;
