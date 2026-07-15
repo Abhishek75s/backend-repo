@@ -65,4 +65,67 @@ const getAllPosts = async (req, res) => {
     }
 }
 
-export { createPost, getAllPosts};
+// Delete any post with its _id
+const deletePost = async (req, res) => {
+    try {
+        // const id = req.params.id;  // method: 1, direct access to keys 
+        
+        const { id } = req.params;  // method: 2, destructuring is preferred one. Looks for 'id' as key
+        // VERY helpful when more than one key needs to be extracted 
+        
+        // Creating Server log 
+        console.log('\nPost delete request initiated with id: ', id);
+        
+        // Basic backend validation 
+        /*
+        if (!id) // Note for: [message: 'id could not be empty !!!'] 
+        // if the id would be empty then URL path will show: " Cannot DELETE /api/v1/posts/deletePost/ "
+        // hence need not to validate this scenario
+        */
+
+        const postId = await Post.findOne({ _id: id });  // id is passed as object, required
+        
+        // Recommended to alternatively use " await Post.findByIdAndDelete(id); to avoid if-else logic"
+        if(!postId)
+        {
+            console.log('post ID NOT found');
+
+            return res.status(400).json({
+                message: 'Post with given _id does not Exists !!!'
+            });
+        }
+        else {
+            // res.status(200).json(postId)
+            // ek request ke liye ek hi response bhej skte h kewal, isliye 'return' lagao always before sending the response
+            // otherwise, Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client, error ayega
+            console.log('post ID found: ', postId);
+        };
+        
+        const deletedPost = await Post.findByIdAndDelete(id); // passing id as string, is optional
+        // mongoose to find in DB/query object is required
+        // it looks for key as _id which is of object type
+        // MongoDB internally casts it to ObjectId
+        console.log('Deleted post details: ', deletedPost);
+
+        if(!deletedPost) return res.status(404).json({
+            message: 'Post with given _id does not Exists !!!',
+            error: error.message
+        });
+
+        return res.status(200).json({
+            message: 'Post deleted Successfully',
+            data: deletedPost
+        });        
+        
+    } catch (error) {
+        res.status(500).json({
+            message: 'Error occured while deleting the Post',
+            error: error.message
+        });
+
+    } finally {
+        console.log('Post deletion request was made !!!');
+    }
+}
+
+export { createPost, getAllPosts, deletePost };
