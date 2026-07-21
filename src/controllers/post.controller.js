@@ -128,4 +128,49 @@ const deletePost = async (req, res) => {
     }
 }
 
-export { createPost, getAllPosts, deletePost };
+// update data in exsting posts
+const updatePost = async (req, res) => {
+    try {
+        // basic backend validation
+        console.log('update request post initiated...');
+        const newData = req.body; 
+
+        // const newData = Object.keys(req.body); // this converts {name: 'x', age: 10, description: ''} 
+        // to array of [name, age, description]
+        
+        if(newData){  // {} = truthy value, if(newData.length === 0) -> will be a faulty check. {}.length always returns undefined
+            // which is surely not === 0, hence the if block will not be executed
+            console.log('NewData: ', newData);
+        }
+        
+        if(!newData || Object.keys(req.body).length === 0) {  // count the number of keys present in req.body's raw json payload data
+            return res.status(400).json({
+                message: 'Data field can not be empty !!!'
+            });
+        }
+
+        const post = await Post.findByIdAndUpdate(req.params.id, req.body, {new: true}); 
+        console.log('Fetched post data: ', post);
+        if(!post) {
+            return res.status(404).json({
+                message: 'No post found with given ID'
+            }); 
+        }
+
+        res.status(200).json({
+            message: 'Post updated sucessfully.',
+            post: post
+        });
+
+    } catch (error) {
+        return res.status(400).json({
+            message: error.message,
+            error: error
+        });
+
+    } finally {
+        console.log('update Post request was made !!!');
+    }
+}
+
+export { createPost, getAllPosts, deletePost, updatePost };
